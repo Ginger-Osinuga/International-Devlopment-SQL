@@ -1,5 +1,38 @@
 <h1>International Development Analysis (SQL)</h1>
 
+## SQL Analysis & Implementation
+The analysis uses a Common Table Expression (CTE) and conditional aggregation inside SQLite to pivot and extract the baseline year (1960) and the final year (2017) populations for comparison.
+
+```sql
+WITH PopulationBounds AS (
+    SELECT
+        country_code,
+        MAX(CASE WHEN year = 1960 THEN population END) AS pop_1960,
+        MAX(CASE WHEN year = 2017 THEN population END) AS pop_2017
+    FROM
+        population_data
+    WHERE
+        country_code NOT IN ('WLD', 'IBT', 'LMY', 'MIC', 'IBD', 'HIC', 'LTE', 'EAS', 'TE')
+    GROUP BY
+        country_code
+)
+SELECT 
+    country_code,
+    pop_1960,
+    pop_2017,
+    (pop_2017 - pop_1960) AS total_growth
+FROM 
+    PopulationBounds
+ORDER BY 
+    total_growth DESC;
+```
+
+###  🔍 Key Technical Approaches
+* **Common Table Expressions (CTEs)**: Used to isolate the data processing layer and create clean, reusable intermediate results.
+* **Conditional Aggregation**: Used `MAX(CASE WHEN...)` statements to cleanly pivot row-based annual data into structured columns for specific comparison years.
+* **Data Filtering**: Excluded broad regional aggregates (`WLD`, `IBT`, `LMY`, etc.) to maintain granular accuracy in regional analysis.
+
+
 <h2>Global Population Growth Over Time</h2>
 <p>This analysis examines global population trends using World Bank data from 1960 to 2017.</p>
 <p>SQL was used to aggregrate population data and analyza trends over time.</p>
@@ -11,6 +44,12 @@
 <p>2. Population growth accelerates significantly after 2000.</p>
 <p>3. India shows the highest population growth among individual countries in the dataset.</p>
 <p>4. Global population growth accelerates significantly after the year 2000.</p>
+
+## Repository Structure
+* `data/`: Contains references or source links to the World Bank population dataset.
+* `scripts/`: Holds the SQL query files used to aggregate and clean the data.
+* `visualizations/`: Includes population trend charts and query output screenshots.
+
 
 <h2>Conclusion</h2>
 <p>The data shows consistent global population growth, highlighting increasing demand for resources and infrastructure worldwide.</p>
