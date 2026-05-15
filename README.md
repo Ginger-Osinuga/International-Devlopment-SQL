@@ -1,9 +1,9 @@
 # International Development: Global Population Trends (SQL Analysis)
 
-## Project Goal
+## 🎯 Project Goal
 The primary objective of this project is to examine and analyze global population trends from 1960 to 2017 using historical World Bank data. By leveraging SQL querying techniques, the project isolates regional data, calculates absolute growth metrics, and identifies key geographical drivers of demographic change.
 
-## Dataset Overview
+## 📖 Dataset Overview
 The dataset contains historical population metrics distributed by country and regional codes over a 57-year period. It includes fields for country codes, year indicators, and absolute population counts. Non-country regional aggregates (such as high-level income groups or global totals) are selectively filtered out during analysis to focus on specific geographic dynamics.
 
 ## SQL Analysis & Implementation
@@ -33,7 +33,7 @@ ORDER BY
     total_growth DESC;
 ```
 
-### Key Technical Approaches
+###  🔍 Key Technical Approaches
 * **Common Table Expressions (CTEs)**: Used to isolate the data processing layer and create clean, reusable intermediate results.
 * **Conditional Aggregation**: Used `MAX(CASE WHEN...)` statements to cleanly pivot row-based annual data into structured columns for specific comparison years.
 * **Data Filtering**: Excluded broad regional aggregates (`WLD`, `IBT`, `LMY`, etc.) to maintain granular accuracy in regional analysis.
